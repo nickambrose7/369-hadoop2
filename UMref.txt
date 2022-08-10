@@ -1,0 +1,31 @@
+1	A	Alex
+1	B	How are you?
+1	B	CSC 369!
+1	B	backups in addition 
+1	B	data is you.
+13	B	No system is immune to failure.
+2	B	This is not a thing
+2	B	their data by creating
+2	A	Mary
+3	A	Bob
+3	B	No
+3	B	No.
+3	B	NOOOOO
+4	B	We do our best to reduce
+4	B	You should archive copies
+4	B	I want to go home
+4	B	Yes
+4	A	Claire
+5	A	Hannah
+5	B	risks to the systems
+5	B	This is it!
+6	B	You should save and save often.
+6	A	Lise
+7	A	Peter
+7	B	of your data at the
+7	B	Woo-hoo!
+7	B	All users should assume
+8	B	but the primary guardian of your
+8	B	end of every week of class.
+8	B	responsibility for
+8	A	Mike
