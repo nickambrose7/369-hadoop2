@@ -34,15 +34,15 @@ public class Report2b {
     }
     
 
-    // controls the reducer to which a particular (key, value) is sent
-    public static class PartitionerImpl extends Partitioner<UrlCountryPair, IntWritable> {
-        @Override
-        public int getPartition(UrlCountryPair pair,
-                                IntWritable temperature,
-                                int numberOfPartitions) {
-            return Math.abs((pair.getUrl().hashCode() + pair.getCountry().hashCode()) % numberOfPartitions);
-        } // Will this all go to one reducer?
-    }
+    // // controls the reducer to which a particular (key, value) is sent
+    // public static class PartitionerImpl extends Partitioner<UrlCountryPair, IntWritable> {
+    //     @Override
+    //     public int getPartition(UrlCountryPair pair,
+    //                             IntWritable temperature,
+    //                             int numberOfPartitions) {
+    //         return Math.abs((pair.getUrl().hashCode() + pair.getCountry().hashCode()) % numberOfPartitions);
+    //     } // Will this all go to one reducer?
+    // }
     
     // // used to group (year,month,day) data by (year,month)
     // public static class GroupingComparator extends WritableComparator {
@@ -55,7 +55,7 @@ public class Report2b {
     //                        WritableComparable wc2) {
     //         UrlCountryPair pair = (UrlCountryPair) wc1;
     //         UrlCountryPair pair2 = (UrlCountryPair) wc2;
-    //         return pair.getYearMonth().compareTo(pair2.getYearMonth());
+    //         return pair.getCountry().compareTo(pair2.getCountry());
     //     }
     // }
 
