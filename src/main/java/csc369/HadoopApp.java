@@ -59,9 +59,9 @@ public class HadoopApp {
 	} else if ("Report1".equalsIgnoreCase(otherArgs[0])) {
 
 	    MultipleInputs.addInputPath(job, new Path(otherArgs[1]),
-					KeyValueTextInputFormat.class, Report1.UserMapper.class );
+					KeyValueTextInputFormat.class, Report1.HostNameMapper.class );
 	    MultipleInputs.addInputPath(job, new Path(otherArgs[2]),
-					TextInputFormat.class, Report1.MessageMapper.class ); 
+					TextInputFormat.class, Report1.AccessLogMapper.class ); 
 
 	    job.setReducerClass(Report1.JoinReducer.class);
 
@@ -69,6 +69,45 @@ public class HadoopApp {
 	    job.setOutputValueClass(Report1.OUTPUT_VALUE_CLASS);
 	    FileOutputFormat.setOutputPath(job, new Path(otherArgs[3]));
 
+	} else if ("Report1b".equalsIgnoreCase(otherArgs[0])) { // same as lab1
+		job.setReducerClass(Report1b.ReducerImpl.class);
+		job.setMapperClass(Report1b.MapperImpl.class);
+		job.setOutputKeyClass(Report1b.OUTPUT_KEY_CLASS);
+		job.setOutputValueClass(Report1b.OUTPUT_VALUE_CLASS);
+		FileInputFormat.addInputPath(job, new Path(otherArgs[1])); // must add input and output path
+	    FileOutputFormat.setOutputPath(job, new Path(otherArgs[2]));
+	} else if ("Report1c".equalsIgnoreCase(otherArgs[0])) { // same as lab1
+		job.setReducerClass(Report1c.ReducerImpl.class);
+		job.setMapperClass(Report1c.MapperImpl.class);
+		job.setOutputKeyClass(Report1c.OUTPUT_KEY_CLASS);
+		job.setOutputValueClass(Report1c.OUTPUT_VALUE_CLASS);
+		FileInputFormat.addInputPath(job, new Path(otherArgs[1])); // must add input and output path
+	    FileOutputFormat.setOutputPath(job, new Path(otherArgs[2]));
+	} else if ("Report2".equalsIgnoreCase(otherArgs[0])) {
+
+	    MultipleInputs.addInputPath(job, new Path(otherArgs[1]),
+					KeyValueTextInputFormat.class, Report2.HostNameMapper.class );
+	    MultipleInputs.addInputPath(job, new Path(otherArgs[2]),
+					TextInputFormat.class, Report2.AccessLogMapper.class ); 
+
+	    job.setReducerClass(Report2.JoinReducer.class);
+
+	    job.setOutputKeyClass(Report2.OUTPUT_KEY_CLASS);
+	    job.setOutputValueClass(Report2.OUTPUT_VALUE_CLASS);
+	    FileOutputFormat.setOutputPath(job, new Path(otherArgs[3]));
+
+	} else if ("Report2b".equalsIgnoreCase(otherArgs[0])) {
+	    job.setReducerClass(Report2b.ReducerImpl.class);
+	    job.setMapperClass(Report2b.MapperImpl.class);
+            
+            job.setPartitionerClass(Report2b.PartitionerImpl.class);
+            // job.setGroupingComparatorClass(Report2b.GroupingComparator.class);
+            // job.setSortComparatorClass(Report2b.SortComparator.class);
+            
+	    job.setOutputKeyClass(Report2b.OUTPUT_KEY_CLASS);
+	    job.setOutputValueClass(Report2b.OUTPUT_VALUE_CLASS);
+	    FileInputFormat.addInputPath(job, new Path(otherArgs[1]));
+	    FileOutputFormat.setOutputPath(job, new Path(otherArgs[2]));
 	}
 	else {
 	    System.out.println("Unrecognized job: " + otherArgs[0]);

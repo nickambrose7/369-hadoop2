@@ -12,7 +12,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.junit.internal.runners.SuiteMethod;
 
-public class Report1 {
+public class Report2 {
 	// order does matter for the command line.
 	// Both mappers must emit the same type!!!
 	// These below must line up with the mapper output!
@@ -33,14 +33,14 @@ public class Report1 {
         public void map(LongWritable key, Text value, Context context)  throws IOException, InterruptedException {
 		String text[] = value.toString().split(" "); //split on space.
 		String hostname = text[0]; // hostname is the first item
-		String one = "1"; // need to emit a 1
-		context.write(new Text(hostname), new Text(one));// emit(Hostname, 1) text format
+		String url = text[6]; // Url is the 6th item 
+		context.write(new Text(hostname), new Text(url));// emit(Hostname, URL) text format
 	}
     }
 
 
     //  Reducer: just one reducer class to perform the "join"
-    public static class JoinReducer extends  Reducer<Text, Text, Text, IntWritable> {
+    public static class JoinReducer extends  Reducer<Text, Text, Text, Text> {
 
 	@Override
 	    public void reduce(Text key, Iterable<Text> values, Context context)  throws IOException, InterruptedException {
@@ -52,18 +52,28 @@ public class Report1 {
 			// ArrayList<String> name = new ArrayList();
 			// ArrayList<String> messages = new ArrayList();
 			Text country = new Text(); // will hold our county info
-			int request_count = 0; // keep track of how many ones are in values.
-			for (Text val : values) {
-				if (val.toString().equals("1")) { //if value == "1"
-				request_count += 1; // add to request counter
+			boolean is_country = false;
+			boolean is_URL = false;
+			for (Text val : values) { // check that country and url are present.
+				if (val.toString().substring(0, 1).equals("/")) { // if no / then its a country
+					is_URL = true;
 				}
 				else {
-					country.set(val); // we have found our country name
+					is_country = true;
+					country.set(val);// will be only one country per hostname.
+				}
+				if (is_URL && is_country) {
+					break;
 				}
 			}
-			IntWritable out = new IntWritable();
-			out.set(request_count); // set our request count to output
-			context.write(country, out);
+			if (is_URL && is_country) {// only care when theres a URL and country
+				for (Text val : values) {
+					if (val.toString().substring(0, 1).equals("/")) {// we want to write bc url
+						context.write(country, val);
+					}
+				}// this for loop doesn't write when val is a country.
+			}
+			
 		}	
     } 
 
