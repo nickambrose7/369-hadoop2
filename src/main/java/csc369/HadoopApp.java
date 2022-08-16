@@ -98,14 +98,16 @@ public class HadoopApp {
 
 	} else if ("Report2b".equalsIgnoreCase(otherArgs[0])) {
 	    job.setReducerClass(Report2b.ReducerImpl.class);
-	    job.setMapperClass(Report2b.MapperImpl.class);
-            
-            job.setPartitionerClass(Report2b.PartitionerImpl.class);
-            // job.setGroupingComparatorClass(Report2b.GroupingComparator.class);
-            // job.setSortComparatorClass(Report2b.SortComparator.class);
-            
+	    job.setMapperClass(Report2b.MapperImpl.class);        
 	    job.setOutputKeyClass(Report2b.OUTPUT_KEY_CLASS);
 	    job.setOutputValueClass(Report2b.OUTPUT_VALUE_CLASS);
+	    FileInputFormat.addInputPath(job, new Path(otherArgs[1]));
+	    FileOutputFormat.setOutputPath(job, new Path(otherArgs[2]));
+	} else if ("Report2c".equalsIgnoreCase(otherArgs[0])) {
+	    job.setReducerClass(Report2c.ReducerImpl.class);
+	    job.setMapperClass(Report2c.MapperImpl.class);        
+	    job.setOutputKeyClass(Report2c.OUTPUT_KEY_CLASS);
+	    job.setOutputValueClass(Report2c.OUTPUT_VALUE_CLASS);
 	    FileInputFormat.addInputPath(job, new Path(otherArgs[1]));
 	    FileOutputFormat.setOutputPath(job, new Path(otherArgs[2]));
 	}

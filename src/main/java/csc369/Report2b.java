@@ -33,47 +33,6 @@ public class Report2b {
             }
     }
     
-
-    // // controls the reducer to which a particular (key, value) is sent
-    // public static class PartitionerImpl extends Partitioner<UrlCountryPair, IntWritable> {
-    //     @Override
-    //     public int getPartition(UrlCountryPair pair,
-    //                             IntWritable temperature,
-    //                             int numberOfPartitions) {
-    //         return Math.abs((pair.getUrl().hashCode() + pair.getCountry().hashCode()) % numberOfPartitions);
-    //     } // Will this all go to one reducer?
-    // }
-    
-    // // used to group (year,month,day) data by (year,month)
-    // public static class GroupingComparator extends WritableComparator {
-    //     public GroupingComparator() {
-    //         super(UrlCountryPair.class, true);
-    //     }
-        
-    //     @Override
-    //     public int compare(WritableComparable wc1,
-    //                        WritableComparable wc2) {
-    //         UrlCountryPair pair = (UrlCountryPair) wc1;
-    //         UrlCountryPair pair2 = (UrlCountryPair) wc2;
-    //         return pair.getCountry().compareTo(pair2.getCountry());
-    //     }
-    // }
-
-    // // used to perform secondary sort on temperature
-    // public static class SortComparator extends WritableComparator {
-    //     protected SortComparator() {
-    //         super(UrlCountryPair.class, true);
-    //     }
-        
-    //     @Override
-    //     public int compare(WritableComparable wc1,
-    //                        WritableComparable wc2) {
-    //         UrlCountryPair pair = (UrlCountryPair) wc1;
-    //         UrlCountryPair pair2 = (UrlCountryPair) wc2;
-    //         return pair.compareTo(pair2);
-    //     }
-    // }
-    
     // output one line for each month, with the temperatures sorted for that month
     public static class ReducerImpl extends Reducer<UrlCountryPair, IntWritable, Text, IntWritable> {
 
@@ -85,8 +44,7 @@ public class Report2b {
                 for (IntWritable value : values) {
                     sum += value.get(); // Need to sum all the 1's up
                 }
-                
-                context.write(new Text(key.getCountry() + " " + key.getUrl()), new IntWritable(sum));
+                context.write(new Text(key.getCountry() + ";" + key.getUrl()), new IntWritable(sum));
             }
     }
 
