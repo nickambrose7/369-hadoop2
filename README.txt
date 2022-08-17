@@ -8,3 +8,10 @@ and the number of times a request was sent from a given country. I use the secon
 job (report1b) to add up all the requests for a given country. Finally, the third
 job (report1c) handles the sorting where I had to negate the counts so that 
 my sort would be in descending order as the instructions ask.
+
+For question 2, the biggest key to solving this one is making use of
+more complex data types. I used UrlCountryPair and CountryCountPair
+so that I could store and manipulate data more effectively throughout
+the map-reduces jobs. The other thing of note was that I had to negate 
+the comparator in the CountryCountPair so that things were sorted in the
+correct order. 
