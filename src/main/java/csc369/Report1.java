@@ -55,7 +55,7 @@ public class Report1 {
 			int request_count = 0; // keep track of how many ones are in values.
 			for (Text val : values) {
 				if (val.toString().equals("1")) { //if value == "1"
-				request_count += 1; // add to request counter
+					request_count += 1; // add to request counter
 				}
 				else {
 					country.set(val); // we have found our country name
